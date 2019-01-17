@@ -3,6 +3,22 @@ Author: Caleb Fink
 
 This repo contains tools for collaborators to share boolean arrays between machines for collaborative data analysis. It also provides version control for arrays. When an array is saved, if an array with the same name already exists, the older version is saved in an archive directory and given a version name. 
 
+### Installation
+
+To install the `CutBucket` module, from the command line:
+
+```
+>>> pip install cutbucket
+```
+
+Or, clone with repository, then from the top level directory type:
+```
+>>> python setup.py clean
+>>> python setup.py install --user
+```
+
+### Usage
+
 
 To use the module to share arrays between collaborators, you must create a GitHub repository to hold the arrays and set it up with ssh (instruction below), then give all of your collaborators access to this repo. 
 
