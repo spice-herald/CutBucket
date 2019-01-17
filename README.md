@@ -1,4 +1,4 @@
-# pycut
+# CutBucket
 Author: Caleb Fink
 
 This repo contains tools for collaborators to share boolean arrays between machines for collaborative data analysis. It also provides version control for arrays. When an array is saved, if an array with the same name already exists, the older version is saved in an archive directory and given a version name. 
@@ -13,14 +13,14 @@ Note, use of this module will require a basic understanding of ```git``` in orde
 Please email cwfink@berkeley.edu if you have any issues.
 
 
-### Demo of CutUtils saving and loading structure
+### Demo of cutbucket.CutUtils saving and loading structure
 
 Author: Caleb Fink
 
 
 ```python
 import numpy as np
-from pycut import CutUtils 
+from cutbucket import CutUtils 
 ```
 
 **create CutUtils Object**
