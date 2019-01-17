@@ -96,6 +96,18 @@ cuts.savecut(cnewtest2, name='creallysillytest', description='this is a really s
 cuts.savecut(cnewtest3, name='ctest', description='this is stupid')
 ```
 
+    No existing version of cut: csillytest. 
+     Saving cut: csillytest, to directory: /scratch/cwfink/repositories/analysis_test_cuts/test_cuts/current_cuts/
+    syncing new cut with GitHub repo...
+    No existing version of cut: creallysillytest. 
+     Saving cut: creallysillytest, to directory: /scratch/cwfink/repositories/analysis_test_cuts/test_cuts/current_cuts/
+    syncing new cut with GitHub repo...
+    updating cut: ctest in directory: /scratch/cwfink/repositories/analysis_test_cuts/test_cuts/current_cuts/ and achiving old version
+    syncing new cut with GitHub repo...
+    old cut is saved as: /scratch/cwfink/repositories/analysis_test_cuts/test_cuts/archived_cuts/ctest_v1.npz
+    syncing old cut with GitHub repo...
+
+
 **List the names of all the current cuts**
 
 
@@ -103,12 +115,26 @@ cuts.savecut(cnewtest3, name='ctest', description='this is stupid')
 cuts.listcuts(whichcuts='current')
 ```
 
+
+
+
+    ['creallysillytest', 'csillytest', 'ctest']
+
+
+
 **List the names of all the archived cuts**
 
 
 ```python
 cuts.listcuts(whichcuts='archived')
 ```
+
+
+
+
+    ['ctest_v1', 'ctest_v0']
+
+
 
 **Let's reload a test and make sure it is the same as the cut we have defined in the namespace**
 
@@ -119,12 +145,18 @@ if np.array_equal(cnewtest3, ctest_reload):
     print('The arrays are the same!')
 ```
 
+    The arrays are the same!
+
+
 **Now let's load the cut description for the current version of** ```ctest```
 
 
 ```python
 print(cuts.loadcutdescription('ctest', lgccurrent=True))
 ```
+
+    this is stupid
+
 
 ^ that sounds about right
 
@@ -135,7 +167,12 @@ Doing this is perhaps not the most python thing to do, but it will ensure that y
 
 ```python
 exec(cuts.updatecuts())
+
 ```
+
+    The following cuts will be loaded into the namespace of cuts.py: ['creallysillytest', 'csillytest', 'ctest'] 
+     make sure to run exec()             on the return of this function to import them into the local namespace
+
 
 If this demo ran without any errors, then you have probably set up your GitHub account properly. If you encountered any errors, then you probably didn't... 
 
