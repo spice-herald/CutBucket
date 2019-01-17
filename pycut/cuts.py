@@ -59,7 +59,7 @@ class CutUtils(object):
         
     """
     
-    def __init__(self,relativepath, lgcsync = True):
+    def __init__(self, repopath, relativepath, lgcsync = True):
         """
         Initialization of the CutUtils object. If the directory structure to save the cuts is not already in 
         place, they will be created upon instantiation of a CutUtils object
@@ -77,13 +77,16 @@ class CutUtils(object):
                 
         """
         
-        self.lgcsync = lgcsync   
-        if relativepath[0] != '/':
+        self.lgcsync = lgcsync  
+        if not relativepath.startswith('/'):
             relativepath = '/' + relativepath
-        if relativepath[-1] == '/':
-            relativepath = relativepath[:-1]
+        if relativepath.endswith('/'):
+            relativepath = relativepath[:-1]    
+        if repopath.endswith('/'):
+            repopath = repopath[:-1]
         self.relativepath = relativepath
-        self.fullpath = os.path.dirname(os.path.abspath(__file__)) + self.relativepath
+        self.fullpath = repopath + self.relativepath
+        
         
         if not os.path.isdir(f'{self.fullpath}/current_cuts'):
             print(f'folder: {self.relativepath}/current_cuts/ does not exist, it is being created now')
@@ -92,8 +95,8 @@ class CutUtils(object):
             print(f'folder: {self.relativepath}/archived_cuts/ does not exist, it is being created now')
             os.makedirs(f'{self.fullpath}/archived_cuts')
         if lgcsync:  
-            print('Connecting to GitHub Repository, please insure that your ssh keys have been uploaded to GitHub account')
-            self.repo = git.Repo(os.path.dirname(os.path.abspath(__file__)))
+            print('Connecting to GitHub Repository, please ensure that your ssh keys have been uploaded to GitHub account')
+            self.repo = git.Repo(repopath)
         else:
             self.repo = None
 
