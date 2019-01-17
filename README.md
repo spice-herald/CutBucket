@@ -4,6 +4,13 @@ Author: Caleb Fink
 This repo contains tools for collaborators to share boolean arrays between machines for collaborative data analysis. It also provides version control for arrays. When an array is saved, if an array with the same name already exists, the older version is saved in an archive directory and given a version name. 
 
 
+To use the module to share arrays between collaborators, you must create a GitHub repository to hold the arrays and set it up with ssh (instruction below), then give all of your collaborators access to this repo. 
+
+An example of how to use the module is shown below. Please also make sure that you are able to run the demo in the ```demos/``` folder.
+
+Note, use of this module will require a basic understanding of ```git``` in order trouble shoot any issues that may arrise. 
+
+Please email cwfink@berkeley.edu if you have any issues.
 
 
 ### Demo of CutUtils saving and loading structure
