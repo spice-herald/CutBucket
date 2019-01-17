@@ -408,7 +408,7 @@ class CutUtils(object):
                 globals()[c] = self.loadcut(c)
             print(f'The following cuts will be loaded into the namespace of cuts.py: {cutnames} \n make sure to run exec() \
             on the return of this function to import them into the local namespace')
-            importstring = f"from pycut.cuts import {', '.join(cutnames)}"
+            importstring = f"from cutbucket.cuts import {', '.join(cutnames)}"
             return importstring
         else:
             return None

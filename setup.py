@@ -30,7 +30,7 @@ class CleanCommand(Command):
                 shutil.rmtree(path)
 
 setup(
-    name="pycut", 
+    name="cutbucket", 
     version="0.1.0", 
     description="Tools for sharing and version control of numpy ndarrays between collaborators", 
     author="Caleb Fink", 
