@@ -35,7 +35,7 @@ setup(
     description="Tools for sharing and version control of numpy ndarrays between collaborators", 
     author="Caleb Fink", 
     author_email="cwfink@berkeley.edu", 
-    url="https://github.com/cwfink/pycut", 
+    url="https://github.com/cwfink/CutBucket", 
     packages=find_packages(), 
     zip_safe=False,
     cmdclass={
