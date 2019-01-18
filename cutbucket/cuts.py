@@ -42,11 +42,15 @@ class CutUtils(object):
     
     Attributes
     ----------
-    relativepath: str
+    repopath : str
+        Abosolute path to directory where working git repository is located
+    relativepath : str
         This is the user supplied path to create the cut mask directory. This will be a relative path 
         within the repository. For example, if working on an analysis for a particular run and dataset, 
         set relativepath = 'Run44_dataset1'. Note, this path need not exist before creation of the CutUtils 
         object, it will be created upon instantiation.
+    branch : str, optional
+        Name of branch to work on (note, it is up to the user to create this branch ahead of time)
     fullpath: str
         The absolute path to the save path for the cut masks. It will be the absolute path to the repository 
         where the analysis is being done, plus the relativepath
@@ -59,25 +63,30 @@ class CutUtils(object):
         
     """
     
-    def __init__(self, repopath, relativepath, lgcsync = True):
+    def __init__(self, repopath, relativepath, branch='master', lgcsync = True):
         """
         Initialization of the CutUtils object. If the directory structure to save the cuts is not already in 
         place, they will be created upon instantiation of a CutUtils object
         
         Parameters
         ----------
-            relativepath: str
-                This is the user supplied path to create the cut mask directory. This will be a relative path 
-                within the repository. For example, if working on an analysis for a particular run and dataset, 
-                set relativepath = 'Run44_dataset1'. Note, this path need not exist before creation of the CutUtils 
-                object, it will be created upon instantiation.
-            lgcsync: bool, optional
-                If True, the local working directory will be synced with the github repository. If False, the saved
-                cuts will only be kept locally. 
-                
+        repopath : str
+            Abosolute path to directory where working git repository is located
+        relativepath : str
+            This is the user supplied path to create the cut mask directory. This will be a relative path 
+            within the repository. For example, if working on an analysis for a particular run and dataset, 
+            set relativepath = 'Run44_dataset1'. Note, this path need not exist before creation of the CutUtils 
+            object, it will be created upon instantiation.
+        branch : str, optional
+            Name of branch to work on (note, it is up to the user to create this branch ahead of time)
+        lgcsync : bool, optional
+            If True, the local working directory will be synced with the github repository. If False, the saved
+            cuts will only be kept locally. 
+
         """
         
-        self.lgcsync = lgcsync  
+        self.lgcsync = lgcsync 
+        self.branch = branch
         if not relativepath.startswith('/'):
             relativepath = '/' + relativepath
         if relativepath.endswith('/'):
@@ -97,6 +106,10 @@ class CutUtils(object):
         if lgcsync:  
             print('Connecting to GitHub Repository, please ensure that your ssh keys have been uploaded to GitHub account')
             self.repo = git.Repo(repopath)
+            try:
+                self.repo.git.checkout(self.branch)
+            except:
+                 raise GitError(f'Unable to connect to branch {self.branch}')
         else:
             self.repo = None
 
@@ -340,8 +353,8 @@ class CutUtils(object):
               
         """
         
-        self.repo.git.pull('origin', 'master')
-        if not self.repo.git.status().split('\n')[1] == "Your branch is up to date with 'origin/master'.":
+        self.repo.git.pull('origin', self.branch)
+        if not self.repo.git.status().split('\n')[1] == f"Your branch is up to date with 'origin/{self.branch}'.":
             raise GitError('Remote repository is not up to date with branch master, this may cause issues with saving \
             \n please make sure repositories are in sync before proceeding')
         
@@ -374,7 +387,7 @@ class CutUtils(object):
         self.repo.git.add(file)
         self.repo.git.commit(m = commitmessage)
         try: 
-            self.repo.git.push('origin', 'master')
+            self.repo.git.push('origin', self.branch)
         except:
             raise GitError(f'Unable to push new {file} to master')
             
