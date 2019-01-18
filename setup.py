@@ -31,7 +31,7 @@ class CleanCommand(Command):
 
 setup(
     name="cutbucket", 
-    version="0.1.0", 
+    version="0.2.0", 
     description="Tools for sharing and version control of numpy ndarrays between collaborators", 
     author="Caleb Fink", 
     author_email="cwfink@berkeley.edu", 
