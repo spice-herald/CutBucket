@@ -354,7 +354,13 @@ class CutUtils(object):
         """
         
         self.repo.git.pull('origin', self.branch)
-        if not self.repo.git.status().split('\n')[1] == f"Your branch is up to date with 'origin/{self.branch}'.":
+
+        commits_ahead = list(self.repo.iter_commits(f'origin/{self.branch}..{self.branch}'))
+        commits_behind = list(self.repo.iter_commits(f'{self.branch}..origin/{self.branch}'))
+
+        commits_off = len(commits_ahead + commits_behind)
+
+        if commits_off > 0:
             raise GitError('Remote repository is not up to date with branch master, this may cause issues with saving \
             \n please make sure repositories are in sync before proceeding')
         
