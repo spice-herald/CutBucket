@@ -237,7 +237,7 @@ class CutUtils(object):
         else:
             for file in files:
                 allcuts.append(file.split('/')[-1].split('.')[0])
-            return allcuts
+            return sorted(allcuts)
 
         
     def loadcut(self, name, lgccurrent = True):
