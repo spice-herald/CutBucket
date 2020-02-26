@@ -92,18 +92,17 @@ class CutUtils(object):
         self.relativepath = relativepath
         self.fullpath = repopath + self.relativepath
 
-
-        if not os.path.isdir(f'{self.fullpath}/current_cuts'):
-            print(f'folder: {self.relativepath}/current_cuts/ does not exist, it is being created now')
-            os.makedirs(f'{self.fullpath}/current_cuts')
-        if not os.path.isdir(f'{self.fullpath}/archived_cuts'):
-            print(f'folder: {self.relativepath}/archived_cuts/ does not exist, it is being created now')
-            os.makedirs(f'{self.fullpath}/archived_cuts')
-        if lgcsync:  
+         if lgcsync:  
             print('Connecting to GitHub Repository, please ensure that your ssh keys have been uploaded to GitHub account')
             self.repo = git.Repo(repopath)
             try:
                 self.repo.git.checkout(self.branch)
+                if not os.path.isdir(f'{self.fullpath}/current_cuts'):
+                    print(f'folder: {self.relativepath}/current_cuts/ does not exist, it is being created now')
+                    os.makedirs(f'{self.fullpath}/current_cuts')
+                if not os.path.isdir(f'{self.fullpath}/archived_cuts'):
+                    print(f'folder: {self.relativepath}/archived_cuts/ does not exist, it is being created now')
+                    os.makedirs(f'{self.fullpath}/archived_cuts')
             except:
                  raise GitError(f'Unable to connect to branch {self.branch}')
         else:
